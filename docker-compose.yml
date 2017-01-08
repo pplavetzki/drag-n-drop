@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  web:
+    container_name: application
+    ports:
+      - "4200:4200"
+    volumes:
+      - "./application:/var/app"
+      - "/var/app/node_modules"
+    build:
+      context: .
+      dockerfile: node.dockerfile
+    networks:
+      - default_network
+
+networks:
+  default_network:
+    driver: bridge
