@@ -16,7 +16,12 @@
             <a routerLink="/home" title="Home">
                 <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{'Home' | i18n}}</span></a>
         </li>
-      <!--<li>
+        <li routerLinkActive="active">
+            <a routerLink="/tasks" title="tasks">
+                <i class="fa fa-lg fa-fw fa-fighter-jet"></i> <span class="menu-item-parent">{{'Tasks' | i18n}}</span></a>
+        </li>
+      <!--
+       <li>
         <a title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span
           class="menu-item-parent">{{'Dashboard' | i18n}}</span></a>
         <ul>
@@ -48,7 +53,7 @@
           <i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">{{'Outlook' | i18n}}</span><span
           class="badge pull-right inbox-badge margin-right-13">14</span></a>
       </li>
-
+<!--
       <li>
         <a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span
           class="menu-item-parent">{{'Graphs' | i18n}}</span></a>

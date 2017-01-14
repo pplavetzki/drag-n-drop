@@ -8,7 +8,7 @@ import {HomeComponent} from "./home.component";
   imports: [
     CommonModule,
     homeRouting,
-      SmartadminModule
+    SmartadminModule
   ],
   declarations: [HomeComponent]
 })
