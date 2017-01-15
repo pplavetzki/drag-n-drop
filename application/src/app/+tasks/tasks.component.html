@@ -3,21 +3,69 @@
         <!--<sa-big-breadcrumbs [items]="['Tasks']" icon="tasks"
                             class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>-->
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="well">
 
-                <h1>SmartAdmin Angular 2 <i>blank</i></h1>
-                <p>This is the Tasks module.</p>
+        <div class="row">
+            <div class="col-sm-6 col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-body status">
+                        <div class="who clearfix">
+                            <img src="assets/img/avatars/sunny.png" alt="img" class="online">
+                            <span class="name"><b>John Doe</b> sent you a message</span>
+                            <span class="from"><b>1 days ago</b> via Mobile, Dubai</span>
+                        </div>
+                        <div class="text">
+                            Just landed in Dubai. My body must have lost like 4 liters of moisture, its 50 degrees here!!
+                        </div>
+                        <ul class="links">
+                            <li>
+                                <a href="javascript:void(0);"><i class="fa fa-comment"></i> Reply</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><i class="fa fa-share-square-o"></i> Share</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-body status">
+
+                        <div class="who clearfix">
+                            <h4>Latest Forum Posts</h4>
+                        </div>
+
+                        <div class="who clearfix">
+                            <img src="assets/img/avatars/2.png" alt="img" class="busy">
+                            <span class="name font-sm"> <span class="text-muted">Posted by</span> <b> Karrigan Mean <span class="pull-right font-xs text-muted"><i>3 minutes ago</i></span> </b>
+                                <br>
+                                <a href="javascript:void(0);" class="font-md linker">Business Requirement Docs</a> </span>
+                        </div>
+
+                        <div class="who clearfix">
+                            <img src="assets/img/avatars/3.png" alt="img" class="offline">
+                            <span class="name font-sm"> <span class="text-muted">Posted by</span> <b> Alliz Yaen <span class="pull-right font-xs text-muted"><i>2 days ago</i></span> </b>
+                                <br>
+                                <a href="javascript:void(0);" class="font-md linker">Maecenas nec odio et ante tincidun</a> </span>
+                        </div>
+
+                        <div class="who clearfix">
+                            <img src="assets/img/avatars/4.png" alt="img" class="away">
+                            <span class="name font-sm"> <span class="text-muted">Posted by</span> <b> Barley Kartzukh <span class="pull-right font-xs text-muted"><i>1 month ago</i></span> </b>
+                                <br>
+                                <a href="javascript:void(0);" class="font-md linker">Tincidun nec Gasket Mask </a> </span>
+                        </div>
+
+                    </div>
+			    </div>
             </div>
         </div>
-    </div>
 
     <sa-widgets-grid>
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <sa-widget>
                     <!-- widget options:
@@ -38,7 +86,24 @@
                     <div>
                         <!-- widget content -->
                         <div class="widget-body">
-                            <p>Nonsense, Testy McTestorson, consectetur adipisicing elit. Ad amet architecto deserunt, eveniet officia officiis rem soluta! Alias id odit qui quis reprehenderit?</p>
+                            <div class='parent'>
+                                <label for='hy'>Move stuff between these two containers. Note how the stuff gets inserted near the mouse pointer?
+                                    Great stuff.</label>
+                                <div class='wrapper'>
+                                    <div class='container' [dragula]='"first-bag"'>
+                                        <div>You can move these elements between these two containers</div>
+                                        <div>Moving them anywhere else isn't quite possible</div>
+                                        <div>There's also the possibility of moving elements around in the same container, changing their position
+                                        </div>
+                                    </div>
+                                    <div class='container' [dragula]='"first-bag"'>
+                                        <div>This is the default use case. You only need to specify the containers you want to use</div>
+                                        <div>More interactive use cases lie ahead</div>
+                                        <div>Make sure to check out the <a href='https://github.com/bevacqua/dragula#readme'>documentation on
+                                            GitHub!</a></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- end widget content -->
                     </div>

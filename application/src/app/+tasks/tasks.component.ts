@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+
+import {DragulaService, DragulaModule} from 'ng2-dragula/ng2-dragula';
+
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',

@@ -11,7 +11,8 @@ import {DragulaService, DragulaModule} from 'ng2-dragula/ng2-dragula';
   imports: [
     CommonModule,
     routing,
-    SmartadminModule
+    SmartadminModule,
+    DragulaModule
   ],
   declarations: [TasksComponent]
 })

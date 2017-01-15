@@ -17,3 +17,7 @@
  * - BODY
  * - CUSTOM STYLES
  */
+ /*@import 'node_modules/dragula/dist/dragula.css';*/
+ .linker {
+     color: #3276b1!important;
+ }
