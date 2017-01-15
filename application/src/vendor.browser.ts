@@ -37,8 +37,6 @@ window['moment'] = require('moment');
 
 import 'imports-loader?jQuery=jquery!jquery-color/jquery.color.js'
 
-import 'dragula/dist/dragula.css';
-
 require('smartadmin-plugins/notification/SmartNotification.min.js');
 
 

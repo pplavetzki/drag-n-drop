@@ -8,7 +8,7 @@ describe('App', () => {
 
   it('should have a title', () => {
     let subject = browser.getTitle();
-    let result  = 'Smartadmin Angular2 template';
+    let result  = 'xxxxxxx';
     expect(subject).toEqual(result);
   });
 

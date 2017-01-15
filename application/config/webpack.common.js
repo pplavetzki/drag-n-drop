@@ -25,7 +25,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
  */
 const HMR = helpers.hasProcessFlag('hot');
 const METADATA = {
-  title: 'Smartadmin Angular2 template',
+  title: `Plavetzki's House of Code`,
   baseUrl: '/',
   isDevServer: helpers.isWebpackDevServer()
 };
