@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
+
+import {DragulaService, DragulaModule} from 'ng2-dragula/ng2-dragula';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -46,7 +49,8 @@ type StoreType = {
     CoreModule,
     SmartadminLayoutModule,
 
-
+DragulaModule,
+DragulaService,
 
     routing
   ],
