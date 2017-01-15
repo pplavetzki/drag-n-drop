@@ -49,9 +49,7 @@ type StoreType = {
     CoreModule,
     SmartadminLayoutModule,
 
-DragulaModule,
-DragulaService,
-
+    DragulaModule,
     routing
   ],
   exports: [
