@@ -10,9 +10,10 @@
                     <div class="panel-body status">
 
                         <div class="who clearfix">
-                            <h4>Available Modules to Add</h4>
+                            <h4>Available Tasks</h4>
                         </div>
                         <div [dragula]='"second-bag"' style="min-height: 80px" id="left">
+							<!--
                             <div class="who clearfix">
                                 <img src="assets/img/avatars/2.png" alt="img" class="busy">
                                 <span class="name font-sm"> <span class="text-muted">Posted by</span> <b> Karrigan Mean <span class="pull-right font-xs text-muted"><i>3 minutes ago</i></span> </b>
@@ -32,6 +33,21 @@
                                     <br>
                                     <a href="javascript:void(0);" class="font-md linker">Tincidun nec Gasket Mask </a> </span>
                             </div>
+							-->
+                            <div class="text">
+								<span style="font-weight: bold;padding-right:5px;" class="yaml-main">-</span><span style="font-weight:bold;padding-left:5px;padding-right:5px;" class="yaml-name">name:</span><span style="padding-left:5px;" class="yaml-main-info">This is a simple template task</span>
+								<span style="padding-left:15px;font-weight:bold;display:block;" class="yaml-level-two">template:</span>
+								<span style="padding-left:25px;display:block;" class="yaml-level-three">src=/srv/httpd.j2</span>
+								<span style="padding-left:25px;display:block;" class="yaml-level-three">dest=/etc/httpd.conf</span>
+							</div>
+                            <div class="text">
+								<span style="font-weight: bold;padding-right:5px;" class="yaml-main">-</span><span style="font-weight:bold;padding-left:5px;padding-right:5px;" class="yaml-name">name:</span><span style="padding-left:5px;" class="yaml-main-info">Copy ansible inventory file to client</span>
+								<span style="padding-left:15px;font-weight:bold;display:block;" class="yaml-level-two">copy:</span>
+								<span style="padding-left:25px;display:block;" class="yaml-level-three">src=/etc/ansible/hosts</span>
+								<span style="padding-left:25px;display:block;" class="yaml-level-three">dest=/etc/ansible/hosts</span>
+								<span style="padding-left:25px;display:block;" class="yaml-level-three">owner=root</span>
+								<span style="padding-left:25px;display:block;" class="yaml-level-three">group=root</span>						
+							</div>
                         </div>
                     </div>
 			    </div>
@@ -40,7 +56,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body status">
                         <div class="who clearfix">
-                            <h4>Modules to Use</h4>
+                            <h4>Create the Play</h4>
                         </div>
                         <div [dragula]='"second-bag"' style="min-height: 80px" id="right">
 
@@ -48,5 +64,5 @@
                     </div>
                 </div>
             </div>
-        </div>
+		</div>
 </div>

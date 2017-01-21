@@ -5,7 +5,7 @@ import {SmartadminModule} from "../shared/smartadmin.module";
 import {TasksComponent} from "./tasks.component";
 
 
-import {DragulaService, DragulaModule} from 'ng2-dragula/ng2-dragula';
+import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 
 @NgModule({
   imports: [
