@@ -23,16 +23,16 @@ Vagrant.configure("2") do |config|
 
   end
 
-  config.vm.define :vsrx1 do |vsrx|
-    vsrx.vm.hostname = :vsrx1
-    vsrx.vm.box = 'juniper/ffp-12.1X47-D15.4-packetmode'
-    vsrx.vm.network :private_network, ip: '192.168.0.3'
-    vsrx.vm.provider :parallels do |prl|
-      prl.cpus = 2 # needs 2 to boot?
-      prl.memory = 512
-      prl.name = 'vsrx1_config'
-      prl.customize ['set', :id, '--device-add', 'serial', '--device' 'server', '--output', '/tmp/vsrx1_config_serial']
-    end
-  end
+  # config.vm.define :vsrx1 do |vsrx|
+  #   vsrx.vm.hostname = :vsrx1
+  #   vsrx.vm.box = 'juniper/ffp-12.1X47-D15.4-packetmode'
+  #   vsrx.vm.network :private_network, ip: '192.168.0.3'
+  #   vsrx.vm.provider :parallels do |prl|
+  #     prl.cpus = 2 # needs 2 to boot?
+  #     prl.memory = 512
+  #     prl.name = 'vsrx1_config'
+  #     prl.customize ['set', :id, '--device-add', 'serial', '--device' 'server', '--output', '/tmp/vsrx1_config_serial']
+  #   end
+  # end
 
 end
