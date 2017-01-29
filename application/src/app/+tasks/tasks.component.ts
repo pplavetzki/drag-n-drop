@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 
+import { ChatService } from '../shared/chat/chat.service';
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 
 @Component({
@@ -10,7 +13,9 @@ import {DragulaService} from 'ng2-dragula/ng2-dragula';
 })
 export class TasksComponent implements OnInit {
 
-  constructor(private _dragulaService:DragulaService) { 
+  private connection;
+
+  constructor(private _dragulaService:DragulaService, private _chatService:ChatService) { 
     _dragulaService.setOptions('second-bag', {
       copy:(el, source) => { return source.id === 'left'; },
       copySortSource: false,
@@ -20,7 +25,16 @@ export class TasksComponent implements OnInit {
     });
   }
 
+
+
   ngOnInit() {
+    this.connection = this._chatService.getMessages().subscribe(message => {
+      console.log(message);
+    });
+  }
+
+  ngOnDestroy() {
+    this.connection.unsubscribe();
   }
 
 }

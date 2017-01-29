@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { routing } from './tasks.routing';
 import {SmartadminModule} from "../shared/smartadmin.module";
 import {TasksComponent} from "./tasks.component";
-
+import { ChatModule } from "../shared/chat/chat.module";
 
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 
@@ -12,7 +12,8 @@ import {DragulaModule} from 'ng2-dragula/ng2-dragula';
     CommonModule,
     routing,
     SmartadminModule,
-    DragulaModule
+    DragulaModule,
+    ChatModule
   ],
   declarations: [TasksComponent]
 })
