@@ -27,6 +27,18 @@ services:
     networks:
       - default_network
 
+  ansible-api:
+    container_name: ansible-api
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./ansible-api:/var/app"
+    build:
+      context: .
+      dockerfile: ansible-api.dockerfile
+    networks: 
+      - default_network
+
 networks:
   default_network:
     driver: bridge

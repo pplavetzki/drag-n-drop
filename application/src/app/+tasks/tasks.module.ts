@@ -4,8 +4,10 @@ import { routing } from './tasks.routing';
 import {SmartadminModule} from "../shared/smartadmin.module";
 import {TasksComponent} from "./tasks.component";
 import { ChatModule } from "../shared/chat/chat.module";
+import {ServicesModule} from '../services/services.module';
 
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';
+
 
 @NgModule({
   imports: [
@@ -13,7 +15,8 @@ import {DragulaModule} from 'ng2-dragula/ng2-dragula';
     routing,
     SmartadminModule,
     DragulaModule,
-    ChatModule
+    ChatModule,
+    ServicesModule
   ],
   declarations: [TasksComponent]
 })
