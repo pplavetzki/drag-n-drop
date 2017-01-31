@@ -30,7 +30,7 @@ services:
   ansible-api:
     container_name: ansible-api
     ports:
-      - "5000:5000"
+      - "4050:5000"
     volumes:
       - "./ansible-api:/var/app"
     build:

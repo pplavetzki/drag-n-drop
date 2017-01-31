@@ -41,10 +41,12 @@ export class TasksComponent implements OnInit {
       gatherFacts: false,
       tasks: [getFactsTask]
     };
-    this._ansibleService.executePlay(play);
-    this.connection = this._chatService.getMessages().subscribe(message => {
+    this.connection = this._ansibleService.executePlay(play).subscribe(message => {
       console.log(message);
     });
+    // this.connection = this._chatService.getMessages().subscribe(message => {
+    //   console.log(message);
+    // });
   }
 
   ngOnDestroy() {

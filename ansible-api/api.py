@@ -1,15 +1,31 @@
 #!/usr/bin/env python
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS, cross_origin
 from flask_socketio import SocketIO
+import logging
+
+import json
+import requests
+import sys
 
 app = Flask(__name__)
+# CORS(app)
+
+logging.getLogger('flask_cors').level = logging.DEBUG
 CORS(app, resources={r"/*":{"origins":"*"}})
 
 socketio = SocketIO(app, engineio_options={'logger': True})
 
 api = Api(app)
+
+@app.route('/play', methods=["POST"])
+def executePlay():
+    try:
+        play = request.json
+        return jsonify(play)
+    except:
+        return jsonify(['There is an error'])
 
 @socketio.on('connect', namespace='/juniper')
 def ws_conn():
