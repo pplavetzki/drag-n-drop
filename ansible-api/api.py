@@ -9,6 +9,8 @@ import json
 import requests
 import sys
 
+from ansible_module import ansible_manager
+
 app = Flask(__name__)
 # CORS(app)
 
@@ -23,9 +25,10 @@ api = Api(app)
 def executePlay():
     try:
         play = request.json
-        return jsonify(play)
-    except:
-        return jsonify(['There is an error'])
+        results = ansible_manager.create_and_run(play)
+        return jsonify(results)
+    except Exception, e:
+        return jsonify(e)
 
 @socketio.on('connect', namespace='/juniper')
 def ws_conn():
