@@ -1,0 +1,222 @@
+# Copyright (c) 1999-2014, Juniper Networks Inc.
+#               2014, Jeremy Schulman
+#
+# All rights reserved.
+#
+# License: Apache 2.0
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright
+#   notice, this list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright
+#   notice, this list of conditions and the following disclaimer in the
+#   documentation and/or other materials provided with the distribution.
+#
+# * Neither the name of the Juniper Networks nor the
+#   names of its contributors may be used to endorse or promote products
+#   derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY Juniper Networks, Inc. ''AS IS'' AND ANY
+# EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL Juniper Networks, Inc. BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+DOCUMENTATION = '''
+---
+module: junos_get_facts
+author: Jeremy Schulman, Juniper Networks
+version_added: "1.0.0"
+short_description: Retrieve facts for a device running Junos OS.
+description:
+    - Retrieve facts for a device running Junos OS, which includes information
+      such as the serial number, product model, and Junos OS version.
+      The module supports using both NETCONF and CONSOLE-based retrieval
+      and returns the information as a JSON dictionary.
+      The information is similar to facts gathered by other IT frameworks.
+requirements:
+    - junos-eznc >= 1.2.2
+    - junos-netconify >= 1.0.1, when using the I(console) option
+options:
+    host:
+        description:
+            - Set to {{ inventory_hostname }}
+        required: true
+    user:
+        description:
+            - Login username
+        required: false
+        default: $USER
+    passwd:
+        description:
+            - Login password
+        required: false
+        default: assumes ssh-key active
+    console:
+        description:
+            - CONSOLE port, per the B(netconify) utility
+        required: false
+        default: None
+    savedir:
+        description:
+            - Path to the local server directory where device fact
+              files will be stored. Resulting file will be
+              I(savedir/hostname-facts.json)
+        required: false
+        default: $CWD
+    logfile:
+        description:
+            - Path on the local server where the progress status is logged
+              for debugging purposes. This option is used only with the
+              I(console) option.
+        required: false
+        default: None
+    port:
+        description:
+            - TCP port number to use when connecting to the device
+        required: false
+        default: 830
+'''
+
+EXAMPLES = '''
+# retrieve facts using NETCONF, assumes ssh-keys
+
+- junos_get_facts: host={{ inventory_hostname }}
+  register: junos
+
+# retrieve facts using CONSOLE, assumes Amnesiac system
+# root login, no password
+
+- junos_get_facts:
+    host={{ inventory_hostname }}
+    user=root
+    console="--telnet={{TERMSERV}},{{TERMSERVPORT}}"
+    savedir=/usr/local/junos/inventory
+  register: junos
+
+# access the facts
+
+- name: version
+  debug: msg="{{ junos.facts.version }}"
+'''
+
+import os
+import json
+
+
+def main():
+    from distutils.version import LooseVersion
+    module = AnsibleModule(
+        argument_spec=dict(
+            host=dict(required=True),
+            console=dict(required=False, default=None),
+            logfile=dict(required=False, default=None),
+            savedir=dict(required=False, default=None),
+            user=dict(required=False, default=os.getenv('USER')),
+            passwd=dict(required=False, default=None),
+            port=dict(required=False, default=830)),
+        supports_check_mode=True)
+
+    m_args = module.params
+    m_results = dict(changed=False)
+
+    if m_args['console'] is None:
+        try:
+            from jnpr.junos import Device
+            from jnpr.junos.version import VERSION
+            if not LooseVersion(VERSION) >= LooseVersion('1.2.2'):
+                module.fail_json(msg='junos-eznc >= 1.2.2 is required for this module this module is ' + VERSION)
+        except ImportError:
+            module.fail_json(msg='junos-eznc >= 1.2.2 is required for this module this module is not here')
+        
+        target = open('file.log', 'w')
+        target.truncate()
+        # -----------
+        # via NETCONF
+        # -----------
+        target.write('begin file\n')
+        conn_props = 'device data host: {0}, user: {1}, passwd: {2}, port: {3}\n'.format(m_args['host'], m_args['user'], m_args['passwd'], m_args['port'])
+        target.write(conn_props)
+        dev = Device(m_args['host'], user=m_args['user'], passwd=m_args['passwd'], port=m_args['port'])
+        try:
+            target.write('before device opened\n')
+            dev.open()
+            target.write('device opened\n')
+            target.close()
+        except Exception as err:
+            target.write(str(err))
+            msg = 'unable to connect to {0}: {1}'.format(m_args['host'], str(err))
+            module.fail_json(msg=msg)
+            target.close()
+            return
+        else:
+            dev.close()
+            dev.facts['has_2RE'] = dev.facts['2RE']
+            del dev.facts['2RE']  # Ansible doesn't allow variables starting with numbers
+            # Ansible 2 doesn't like custom objects in the return value.
+            # Convert the version_info key from a junos.version_info object to a dict
+            dev.facts['version_info'] = dict(dev.facts['version_info'])
+            m_results['facts'] = dev.facts
+            # target.write(json.dump(dev.facts))
+            if m_args['savedir'] is not None:
+                fname = "{0}/{1}-facts.json".format(m_args['savedir'], dev.facts['hostname'])
+                with open(fname, 'w') as factfile:
+                    json.dump(dev.facts, factfile)
+    else:
+        # -----------
+        # via CONSOLE
+        # -----------
+        try:
+            from netconify.cmdo import netconifyCmdo
+            from netconify.constants import version
+            if not LooseVersion(version) >= LooseVersion('1.0.1'):
+                module.fail_json(msg='junos-netconify >= 1.0.1 is required for this module')
+        except ImportError:
+            module.fail_json(msg='junos-netconify >= 1.0.1 is required for this module')
+        import logging
+
+        c_args = []
+        c_args.append(m_args['console'])
+        c_args.append('--facts')
+        if m_args['savedir'] is not None:
+            c_args.append('--savedir=' + m_args['savedir'])
+        c_args.append('--user=' + m_args['user'])
+        if m_args['passwd'] is not None:
+            c_args.append('--passwd=' + m_args['passwd'])
+
+        c_args.append(m_args['host'])
+
+        logfile = m_args['logfile']
+        if logfile is not None:
+            logging.basicConfig(filename=logfile, level=logging.INFO,
+                                format='%(asctime)s:%(name)s:%(message)s')
+            logging.getLogger().name = 'NETCONIFY:' + module.params['host']
+
+            def log_notify(self, event, message):
+                logging.info("%s:%s" % (event, message))
+            use_notifier = log_notify
+        else:
+            def silent_notify(self, event, message):
+                pass
+            use_notifier = silent_notify
+
+        try:
+            nc = netconifyCmdo(notify=use_notifier)
+            c_results = nc.run(c_args)
+        except Exception as err:
+            module.fail_json(msg=str(err))
+        m_results['args'] = m_args        # for debug
+        m_results['facts'] = c_results['facts']
+
+    module.exit_json(**m_results)
+
+from ansible.module_utils.basic import *
+main()
