@@ -14,7 +14,7 @@ import { Play } from '../../models/models'
 @Injectable()
 export class AnsibleService {
 
-    private _socketUrl = 'http://192.168.0.2:4050/juniper';  
+    private _socketUrl = 'http://150.10.0.2:4050/juniper';  
     private _socket;
 
     constructor() {

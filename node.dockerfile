@@ -3,7 +3,7 @@ FROM node:alpine
 RUN apk add --no-cache bash gawk sed grep bc coreutils \
     python python-dev py-pip build-base git openssh
 
-RUN npm install -g angular-cli
+# RUN npm install -g angular-cli
 RUN npm install -g webpack-dev-server
 # RUN npm install -g webpack-dev-server && npm cache clean
 
