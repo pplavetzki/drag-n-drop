@@ -3,10 +3,13 @@ import requests
 
 from flask import Flask, request, jsonify
 
-@application.route('/play', methods=["POST"])
-def executePlay():
-    if request.method == "POST":
-        json_dict = json.loads(request.body.raw)
-        tasks = json_dict['tasks']
+from ansible_module import ansible_manager
 
-        return jsonify(tasks)
+
+def executePlay():
+    try:
+        play = request.json
+        results = ansible_manager.create_and_run(play)
+        return jsonify(results)
+    except Exception, e:
+        return jsonify(e)

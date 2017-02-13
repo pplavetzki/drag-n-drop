@@ -1,51 +1,39 @@
+import json
+
 from collections import namedtuple
 from ansible.vars import VariableManager
 from ansible.inventory import Inventory
 from ansible.playbook.play import Play
 from ansible.executor.task_queue_manager import TaskQueueManager
 from ansible.parsing.dataloader import DataLoader
-from ansible.plugins.callback import CallbackBase
+# from ansible.plugins.callback import CallbackBase
+
+from plugins.callback import CallbackModule
 
 
-class ResultCallback(CallbackBase):
-    """A sample callback plugin used for performing an action as results come in
-
-    If you want to collect all results into a single object for processing at
-    the end of the execution, look into utilizing the ``json`` callback plugin
-    or writing your own custom callback plugin
-    """
-    def v2_runner_on_ok(self, result, **kwargs):
-        """Print a json representation of the result
-
-        This method could store the result in an instance attribute for retrieval later
-        """
-        host = result._host
-        print json.dumps({host.name: result._result}, indent=4)
-
-
-def create_and_run(tasks):
+def create_and_run(play):
     Options = namedtuple('Options', ['connection', 'module_path', 'forks', 'become', 'become_method', 'become_user', 'check'])
     # initialize needed objects
     variable_manager = VariableManager()
     loader = DataLoader()
-    options = Options(connection='local', module_path='library', forks=10, become=None, become_method=None, become_user=None, check=False)
+    options = Options(connection='local', module_path='ansible_module/library', forks=10, become=None, become_method=None, become_user=None, check=False)
     passwords = dict(vault_pass='secret')
 
     # Instantiate our ResultCallback for handling results as they come in
-    results_callback = ResultCallback()
+    # results_callback = ResultCallback()
+    results_callback = CallbackModule()
 
     # create inventory and pass to var manager
-    inventory = Inventory(loader=loader, variable_manager=variable_manager, host_list='localhost')
+    inventory = Inventory(loader=loader, variable_manager=variable_manager, host_list=play['host_list'])
     variable_manager.set_inventory(inventory)
 
     # create play with tasks
     play_source =  dict(
-            name = "Ansible Play",
-            hosts = 'localhost',
+            name = play['name'],
+            hosts = play['hosts'],
             gather_facts = 'no',
             tasks = [
-                dict(action=dict(module='shell', args='ls'), register='shell_out'),
-                dict(action=dict(module='debug', args=dict(msg='{{shell_out.stdout}}')))
+                dict(action=dict(module='junos_get_facts.py', args=dict(host='{{inventory_hostname}}', savedir='.', user='root', passwd='Juniper'))),
             ]
         )
     play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
@@ -62,10 +50,16 @@ def create_and_run(tasks):
                 stdout_callback=results_callback,  # Use our custom callback instead of the ``default`` callback plugin
             )
         result = tqm.run(play)
+
+        return result
+
     finally:
         if tqm is not None:
             tqm.cleanup()
 
 if __name__ == '__main__':
-    tasks = dict(name = "Ansible Play")
-    create_and_run(tasks)
+    # play = {'name':'initial play', 'hosts':'all', 'host_list':['150.10.0.3']}
+    play = {"name":"play of all plays", "hosts":"all", "host_list":["150.10.0.3"], "tasks":[{"name":"task 1"}, {"name":"task 2"}]}
+    print play['name']
+    create_and_run(play)
+

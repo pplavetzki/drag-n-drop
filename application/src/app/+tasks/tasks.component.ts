@@ -30,7 +30,8 @@ export class TasksComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  executePlay(event) {
+    console.log('clicked the play');
     let getFactsTask:Task = {
       name:"Get Facts",
       module: "junos_facts"
@@ -38,15 +39,27 @@ export class TasksComponent implements OnInit {
     let play:Play = {
       name: "Do all tasks",
       hosts: "all",
+      host_list: ['150.10.0.3'],
       gatherFacts: false,
       tasks: [getFactsTask]
     };
-    this.connection = this._ansibleService.executePlay(play).subscribe(message => {
+    console.log(play);
+    let result = this._ansibleService.executePlay(play).subscribe(
+                                results => {
+                                    // Emit list event
+                                    console.log('got results');
+                                    console.log(results);
+                                }, 
+                                err => {
+                                    // Log errors if any
+                                    console.log(err);
+                                });
+  }
+
+  ngOnInit() {
+    this.connection = this._ansibleService.connectSubscription().subscribe(message => {
       console.log(message);
     });
-    // this.connection = this._chatService.getMessages().subscribe(message => {
-    //   console.log(message);
-    // });
   }
 
   ngOnDestroy() {
