@@ -28,14 +28,25 @@ def create_and_run(play):
     inventory = Inventory(loader=loader, variable_manager=variable_manager, host_list=play['host_list'])
     variable_manager.set_inventory(inventory)
 
+    # set up tasks
+    playTasks = []
+
+    for task in play['tasks']:
+        playTasks.append(dict(action=dict(module=task['module'], 
+                              args=dict(host='{{inventory_hostname}}', 
+                                        savedir='.', 
+                                        user='root', 
+                                        passwd='Juniper'))))
+
     # create play with tasks
     play_source =  dict(
             name = play['name'],
             hosts = play['hosts'],
             gather_facts = 'no',
-            tasks = [
-                dict(action=dict(module='junos_get_facts.py', args=dict(host='{{inventory_hostname}}', savedir='.', user='root', passwd='Juniper'))),
-            ]
+            tasks = playTasks
+            # tasks = [
+            #     dict(action=dict(module='junos_get_facts.py', args=dict(host='{{inventory_hostname}}', savedir='.', user='root', passwd='Juniper'))),
+            # ]
         )
     play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
 

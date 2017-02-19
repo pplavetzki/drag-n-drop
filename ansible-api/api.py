@@ -40,6 +40,7 @@ api = Api(app)
 @app.route('/play', methods=["POST"])
 def executePlay():
     try:
+        socketio.emit('ansible-message', 'Play Received', namespace='/juniper')
         play = request.get_json()
         results = ansible_manager.create_and_run(play)
         return jsonify(results)
