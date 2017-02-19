@@ -31,22 +31,27 @@ def create_and_run(play):
     # set up tasks
     playTasks = []
 
+    # let getFactsTask:Task = {
+    #   name:"Get Facts",
+    #   module: "junos_get_facts.py",
+    #   args: {
+    #     host: '{{inventory_hostname}}',
+    #     savedir: '.',
+    #     user:'root',
+    #     passwd:'Juniper'
+    #   }
+    # };
+
     for task in play['tasks']:
-        playTasks.append(dict(action=dict(module=task['module'], 
-                              args=dict(host='{{inventory_hostname}}', 
-                                        savedir='.', 
-                                        user='root', 
-                                        passwd='Juniper'))))
+        playTasks.append(dict(action=task))
+        
 
     # create play with tasks
     play_source =  dict(
             name = play['name'],
             hosts = play['hosts'],
-            gather_facts = 'no',
+            gather_facts = play['gatherFacts'],
             tasks = playTasks
-            # tasks = [
-            #     dict(action=dict(module='junos_get_facts.py', args=dict(host='{{inventory_hostname}}', savedir='.', user='root', passwd='Juniper'))),
-            # ]
         )
     play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
 

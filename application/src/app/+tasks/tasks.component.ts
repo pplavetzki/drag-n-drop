@@ -34,7 +34,7 @@ export class TasksComponent implements OnInit {
   executePlay(event) {
     let getFactsTask:Task = {
       name:"Get Facts",
-      module: "junos_get_facts.py",
+      module: "junos_get_facts",
       args: {
         host: '{{inventory_hostname}}',
         savedir: '.',
@@ -43,10 +43,10 @@ export class TasksComponent implements OnInit {
       }
     };
     let play:Play = {
-      name: "Do all tasks",
+      name: "Juniper Tasks",
       hosts: "all",
       host_list: ['150.10.0.3'],
-      gatherFacts: false,
+      gatherFacts: "no",
       tasks: [getFactsTask]
     };
     console.log(play);

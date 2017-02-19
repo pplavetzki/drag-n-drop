@@ -4,6 +4,6 @@ export interface Play {
     name: string;
     hosts: string;
     host_list: Array<string>;
-    gatherFacts: boolean;
+    gatherFacts: string;
     tasks:Array<Task>;
 }
