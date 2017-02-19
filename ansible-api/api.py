@@ -14,12 +14,13 @@ import sys
 from ansible_module import ansible_manager
 
 app = Flask(__name__)
-# CORS(app)
 
 logging.getLogger('flask_cors').level = logging.DEBUG
 CORS(app, resources={r"/*":{"origins":"*"}})
 
+
 socketio = SocketIO(app, engineio_options={'logger': True})
+
 
 '''
 This is where we hook our service into
@@ -28,29 +29,33 @@ the redis pub/sub
 def _handler(message):
     socketio.emit('ansible-message', message['data'], namespace='/juniper')
 
+
 db = redis.StrictRedis(host='150.10.0.2', port=6379, db=0)
 pub = db.pubsub(ignore_subscribe_messages=True)
 pub.subscribe(**{'ansible-channel': _handler})
 
 api = Api(app)
 
+
 @app.route('/play', methods=["POST"])
 def executePlay():
     try:
-        socketio.emit('ansible-message', 'received play', namespace='/juniper')
-        play = {"name":"play of all plays", "hosts":"all", "host_list":["150.10.0.3"], "tasks":[{"name":"task 1"}, {"name":"task 2"}]}
+        play = request.get_json()
         results = ansible_manager.create_and_run(play)
         return jsonify(results)
     except Exception, e:
         return jsonify(e)
 
+
 @socketio.on('connect', namespace='/juniper')
 def ws_conn():
-    socketio.emit('ansible-message', 'connected-cool', namespace='/juniper')
+    socketio.emit('ansible-message', 'connected', namespace='/juniper')
+
     
 @socketio.on('disconnect', namespace='/juniper')
 def ws_disconn():
     socketio.emit('ansible-message', 'disconnected', namespace='/juniper')
+
 
 @socketio.on_error_default
 def default_error_handler(e):
@@ -59,6 +64,7 @@ def default_error_handler(e):
     log.write(request.event["message"] + '\n') # "my error event"
     log.write(request.event["args"] + '\n')    # (data,)
     log.close()
+    
 
 if __name__ == '__main__':
     thread = pub.run_in_thread(sleep_time=0.1)

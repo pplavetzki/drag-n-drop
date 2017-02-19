@@ -16,6 +16,7 @@ def create_and_run(play):
     # initialize needed objects
     variable_manager = VariableManager()
     loader = DataLoader()
+    # this is key the module_path is in relation to the api.py file 
     options = Options(connection='local', module_path='ansible_module/library', forks=10, become=None, become_method=None, become_user=None, check=False)
     passwords = dict(vault_pass='secret')
 

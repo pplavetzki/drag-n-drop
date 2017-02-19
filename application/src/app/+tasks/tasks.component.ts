@@ -17,6 +17,7 @@ import { Play, Task } from '../models/models';
 export class TasksComponent implements OnInit {
 
   private connection;
+  messages:Array<string> = [];
 
   constructor(private _dragulaService:DragulaService, 
               private _chatService:ChatService,
@@ -29,12 +30,17 @@ export class TasksComponent implements OnInit {
       }
     });
   }
-
+//module='junos_get_facts.py', args=dict(host='{{inventory_hostname}}', savedir='.', user='root', passwd='Juniper'))
   executePlay(event) {
-    console.log('clicked the play');
     let getFactsTask:Task = {
       name:"Get Facts",
-      module: "junos_facts"
+      module: "junos_get_facts.py",
+      args: {
+        host: '{{inventory_hostname}}',
+        savedir: '.',
+        user:'root',
+        passwd:'Juniper'
+      }
     };
     let play:Play = {
       name: "Do all tasks",
@@ -46,8 +52,6 @@ export class TasksComponent implements OnInit {
     console.log(play);
     let result = this._ansibleService.executePlay(play).subscribe(
                                 results => {
-                                    // Emit list event
-                                    console.log('got results');
                                     console.log(results);
                                 }, 
                                 err => {
@@ -58,6 +62,9 @@ export class TasksComponent implements OnInit {
 
   ngOnInit() {
     this.connection = this._ansibleService.connectSubscription().subscribe(message => {
+      if(message != "connected") { 
+        this.messages.push(message);
+      }
       console.log(message);
     });
   }

@@ -17,7 +17,6 @@ class CallbackModule(CallbackBase):
         super(CallbackModule, self).__init__()
         self.start_time = datetime.now()
         self.redis_client = redis.StrictRedis(host='150.10.0.2', port=6379, db=0)
-	self.redis_client.publish('ansible-channel', 'connected in ansible')
           
     def v2_runner_on_failed(self, result, ignore_errors=False):
         delegated_vars = result._result.get('_ansible_delegated_vars', None)
