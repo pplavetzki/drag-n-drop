@@ -96,9 +96,11 @@
     "smartadmin-plugins": "^1.0.15",
     "socket.io-client": "^1.7.2",
     "summernote": "^0.8.1",
+    "swig": "^1.4.2",
     "to-markdown": "^3.0.1",
     "ts-helpers": "^1.1.1",
     "webpack": "^2.2.0-rc.3",
+    "yamljs": "^0.2.8",
     "zone.js": "^0.7.2"
   },
   "devDependencies": {

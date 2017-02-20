@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
-
+import * as YAML from 'yamljs';
 import { ChatService } from '../shared/chat/chat.service';
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 import { AnsibleService } from '../services/ansible/ansible.service';
@@ -18,6 +18,7 @@ export class TasksComponent implements OnInit {
 
   private connection;
   messages:Array<string> = [];
+  testYml:string = '';
 
   constructor(private _dragulaService:DragulaService, 
               private _chatService:ChatService,
@@ -49,15 +50,21 @@ export class TasksComponent implements OnInit {
       gatherFacts: "no",
       tasks: [getFactsTask]
     };
-    console.log(play);
-    let result = this._ansibleService.executePlay(play).subscribe(
-                                results => {
-                                    console.log(results);
-                                }, 
-                                err => {
-                                    // Log errors if any
-                                    console.log(err);
-                                });
+
+    let result = this._ansibleService.loadFile('facts.yml').subscribe(data => {
+        this.testYml = data;
+        let loadedYaml = YAML.parse(data);
+        console.log(data);
+    });
+
+    // let result = this._ansibleService.executePlay(play).subscribe(
+    //                             results => {
+    //                                 console.log(results);
+    //                             }, 
+    //                             err => {
+    //                                 // Log errors if any
+    //                                 console.log(err);
+    //                             });
   }
 
   ngOnInit() {

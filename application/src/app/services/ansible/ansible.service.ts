@@ -51,4 +51,11 @@ export class AnsibleService {
         
         return observable;
     }
+
+    loadFile(file:string): Observable<any> {
+        let observable = this._http.get(file)
+                                .map((res:any) => res._body)
+                                .catch((error:any) => Observable.throw(error || 'Server Error'));
+        return observable;
+    }
 }

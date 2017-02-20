@@ -161,3 +161,7 @@ nested-repeat-example .container span {
   display: block;
   padding: 8px;
 }
+
+pre code {
+  color: #333
+}

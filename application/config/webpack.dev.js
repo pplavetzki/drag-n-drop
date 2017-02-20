@@ -146,7 +146,6 @@ module.exports = function (options) {
         poll: 1000
       }
     },
-
     /*
      * Include polyfills or mocks for various node stuff
      * Description: Node configuration
@@ -154,6 +153,8 @@ module.exports = function (options) {
      * See: https://webpack.github.io/docs/configuration.html#node
      */
     node: {
+      console: true,
+      fs: 'empty',
       global: true,
       crypto: 'empty',
       process: true,
