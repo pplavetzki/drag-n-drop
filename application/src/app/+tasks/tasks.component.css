@@ -165,3 +165,29 @@ nested-repeat-example .container span {
 pre code {
   color: #333
 }
+
+.yaml-main {
+  font-weight: bold;
+  padding-right:5px;
+}
+
+.yaml-name {
+  font-weight:bold;
+  padding-left:5px;
+  padding-right:5px;
+}
+
+.yaml-level-two {
+  padding-left:15px;
+  font-weight:bold;
+  display:block;
+}
+
+.yaml-level-three {
+  padding-left:25px;
+  display:block;
+}
+
+.yaml-main-info {
+  padding-left:5px;
+}

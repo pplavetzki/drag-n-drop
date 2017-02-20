@@ -14,26 +14,26 @@
                         </div>
                         <div [dragula]='"second-bag"' style="min-height: 80px" id="left">
                             <div class="text">
-								<span style="font-weight: bold;padding-right:5px;" class="yaml-main">-</span><span style="font-weight:bold;padding-left:5px;padding-right:5px;" class="yaml-name">name:</span><span style="padding-left:5px;" class="yaml-main-info">This is a simple template task</span>
-								<span style="padding-left:15px;font-weight:bold;display:block;" class="yaml-level-two">template:</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three">src=/srv/httpd.j2</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three">dest=/etc/httpd.conf</span>
+								<span class="yaml-main">-</span><span class="yaml-name">name:</span><span class="yaml-main-info">This is a simple template task</span>
+								<span class="yaml-level-two">template:</span>
+								<span class="yaml-level-three">src=/srv/httpd.j2</span>
+								<span class="yaml-level-three">dest=/etc/httpd.conf</span>
 							</div>
                             <div class="text">
-								<span style="font-weight: bold;padding-right:5px;" class="yaml-main">-</span><span style="font-weight:bold;padding-left:5px;padding-right:5px;" class="yaml-name">name:</span><span style="padding-left:5px;" class="yaml-main-info">Copy ansible inventory file to client</span>
-								<span style="padding-left:15px;font-weight:bold;display:block;" class="yaml-level-two">copy:</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three">src=/etc/ansible/hosts</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three">dest=/etc/ansible/hosts</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three">owner=root</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three">group=root</span>						
+								<span class="yaml-main">-</span><span class="yaml-name">name:</span><span class="yaml-main-info">Copy ansible inventory file to client</span>
+								<span class="yaml-level-two">copy:</span>
+								<span class="yaml-level-three">src=/etc/ansible/hosts</span>
+								<span class="yaml-level-three">dest=/etc/ansible/hosts</span>
+								<span class="yaml-level-three">owner=root</span>
+								<span class="yaml-level-three">group=root</span>						
 							</div>
                             <div class="text">
-								<span style="font-weight: bold;padding-right:5px;" class="yaml-main">-</span><span style="font-weight:bold;padding-left:5px;padding-right:5px;" class="yaml-name">name:</span><span style="padding-left:5px;" class="yaml-main-info">Gather Juniper Facts</span>
-								<span style="padding-left:15px;font-weight:bold;display:block;" class="yaml-level-two">junos_get_facts:</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three" ngNonBindable>host={{ inventory_hostname }}</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three" ngNonBindable>savedir={{ savedir }}</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three" ngNonBindable>user={{ user }}</span>
-								<span style="padding-left:25px;display:block;" class="yaml-level-three" ngNonBindable>passwd={{ passwd }}</span>						
+								<span class="yaml-main">-</span><span class="yaml-name">name:</span><span class="yaml-main-info">Gather Juniper Facts</span>
+								<span class="yaml-level-two">junos_get_facts:</span>
+								<span class="yaml-level-three" ngNonBindable>host={{ inventory_hostname }}</span>
+								<span class="yaml-level-three" ngNonBindable>savedir={{ savedir }}</span>
+								<span class="yaml-level-three" ngNonBindable>user={{ user }}</span>
+								<span class="yaml-level-three" ngNonBindable>passwd={{ passwd }}</span>						
 							</div>
                         </div>
                     </div>

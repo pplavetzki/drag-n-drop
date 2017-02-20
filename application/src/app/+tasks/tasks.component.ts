@@ -3,6 +3,8 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 import * as YAML from 'yamljs';
+import * as swig from 'swig';
+
 import { ChatService } from '../shared/chat/chat.service';
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 import { AnsibleService } from '../services/ansible/ansible.service';
@@ -51,9 +53,12 @@ export class TasksComponent implements OnInit {
       tasks: [getFactsTask]
     };
 
-    let result = this._ansibleService.loadFile('facts.yml').subscribe(data => {
+    let result = this._ansibleService.loadFile('playbook.yml').subscribe(data => {
         this.testYml = data;
         let loadedYaml = YAML.parse(data);
+        let tpl = swig.compile('name:  Gather Juniper Facts\n  junos_get_facts:\n    host={{inventory_hostname}}\n     savedir={{savedir}}     user={{user}}    passwd={{passwd}}');
+        let values = tpl(loadedYaml);
+        console.log(values);
         console.log(data);
     });
 
