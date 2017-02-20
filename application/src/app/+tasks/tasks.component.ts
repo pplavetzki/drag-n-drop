@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import * as YAML from 'yamljs';
 import * as swig from 'swig';
 
-import { ChatService } from '../shared/chat/chat.service';
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 import { AnsibleService } from '../services/ansible/ansible.service';
 
@@ -23,7 +22,6 @@ export class TasksComponent implements OnInit {
   testYml:string = '';
 
   constructor(private _dragulaService:DragulaService, 
-              private _chatService:ChatService,
               private _ansibleService:AnsibleService) { 
     _dragulaService.setOptions('second-bag', {
       copy:(el, source) => { return source.id === 'left'; },

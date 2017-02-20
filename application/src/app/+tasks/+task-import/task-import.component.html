@@ -1,0 +1,86 @@
+<div id="content">
+
+  <!-- row -->
+  <div class="row">
+
+    <!-- col -->
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+      <h1 class="page-title txt-color-blueDark"><!-- PAGE HEADER --><i class="fa-fw fa fa-tasks"></i> Tasks <span>>
+							Task Import </span></h1>
+    </div>
+    <!-- end col -->
+
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-lg-4">
+              <form action="" class="smart-form">
+                <fieldset style="padding:10px 14px 5px">	
+                  <section style="margin-bottom: 5px">
+                    <label class="label">Import Playbook</label>
+                    <label for="file" class="input input-file">
+                      <div class="button"><input type="file" name="file" onchange="this.parentNode.nextSibling.value = this.value">Browse</div><input type="text" placeholder="Include some files" readonly="">
+                    </label>
+                  </section>
+                  <a class="btn btn-xs btn-primary bg-color-green" (click)="importPlaybook($event)">Import Playbook</a>
+                </fieldset>
+              </form>
+    </div>
+  </div>
+  <!-- end row -->
+  <div *ngIf="showPlaybook" class="row" style="padding-top:15px;" >
+    <div class="col-sm-10 col-md-8 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-body status">
+
+                <div class="who clearfix">
+                    <h4>Playbook<a href="javascript:void(0);" title="Taskify" class="btn btn-primary btn-circle pull-right"><i class="glyphicon glyphicon-list"></i></a></h4>
+                </div>
+                <div class="text">
+                    <pre>
+                        <code>
+{{playbookYml}}
+                        </code>
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!--
+  The ID "widget-grid" will start to initialize all widgets below
+  You do not need to use widgets if you dont want to. Simply remove
+  the <section></section> and you can use wells or panels instead
+  -->
+
+  <!-- widget grid -->
+  <section id="widget-grid" class="">
+
+    <!-- row -->
+
+    <div class="row">
+
+      <!-- a blank row to get started -->
+      <div class="col-sm-6 col-lg-4">
+
+        <!-- your contents here -->
+        <!--<div class="panel panel-default"> /
+          <div class="panel-body status">
+            <div class="who clearfix">
+
+            </div>
+            <div class="text">
+
+            </div>
+          </div>
+         </div>-->
+
+      </div>
+
+    </div>
+
+    <!-- end row -->
+
+  </section>
+  <!-- end widget grid -->
+
+</div>

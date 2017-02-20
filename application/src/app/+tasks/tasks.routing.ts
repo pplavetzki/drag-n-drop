@@ -9,6 +9,11 @@ export const tasksRoutes: Routes = [
         data: {
             pageTitle: 'Tasks'
         }
+    },
+    {
+        path: 'task-import',
+        loadChildren: ()=> System.import('./+task-import/task-import.module')
+        .then((imports: any)=> imports.TaskImportModule)
     }
 ];
 
