@@ -1,22 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { routing } from './tasks.routing';
+import { routing } from './hosts.routing';
 import {SmartadminModule} from "../shared/smartadmin.module";
-import {TasksComponent} from "./tasks.component";
+import {HostsComponent} from "./hosts.component";
+import {AccordionModule} from "ng2-bootstrap";
 
 import {ServicesModule} from '../services/services.module';
-
-import {DragulaModule} from 'ng2-dragula/ng2-dragula';
-
 
 @NgModule({
   imports: [
     CommonModule,
     routing,
     SmartadminModule,
-    DragulaModule,
-    ServicesModule
+    ServicesModule,
+    AccordionModule.forRoot()
   ],
-  declarations: [TasksComponent]
+  declarations: [HostsComponent]
 })
-export class TasksModule { }
+export class HostsModule { }

@@ -2,6 +2,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AnsibleService } from './ansible/ansible.service';
+import { DataService } from './data/data.service';
 
 @NgModule({
   imports: [
@@ -9,7 +10,8 @@ import { AnsibleService } from './ansible/ansible.service';
   ],
   declarations: [],
   providers: [
-    AnsibleService
+    AnsibleService,
+    DataService
   ]
 })
 export class ServicesModule {

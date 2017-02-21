@@ -1,3 +1,74 @@
-<div class="content">
-    hello world
+<div id="content">
+
+  <div class="row">
+    <div class="col-sm-6 col-lg-4">
+              <form action="" class="smart-form">
+                <fieldset style="padding:10px 14px 5px">	
+                  <section style="margin-bottom: 5px">
+                    <label class="label">Import Ansible Project</label>
+                    <label for="file" class="input input-file">
+                      <div class="button"><input type="file" name="file" onchange="this.parentNode.nextSibling.value = this.value">Browse</div><input type="text" placeholder="zip or tgz" readonly="">
+                    </label>
+                  </section>
+                  <a class="btn btn-xs btn-primary bg-color-green" (click)="importPlaybook($event)">Import</a>
+                </fieldset>
+              </form>
+    </div>
+  </div>
+  <div *ngIf="showPlaybook" class="row" style="padding-top:15px;">
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-body status">
+                <div class="who clearfix">
+                    <h4>Playbook<a href="javascript:void(0);" title="Taskify" class="btn btn-primary btn-circle pull-right"><i class="glyphicon glyphicon-list"></i></a></h4>
+                </div>
+                <div class="text">
+                    <pre>
+                        <code>
+{{playbookYml}}
+                        </code>
+                    </pre>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body status">
+                        <div class="who clearfix">
+                            <h4>Host Vars</h4>
+                        </div>
+                        <div class="text">
+                            <pre>
+                                <code>
+{{hostVars}}
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body status">
+                        <div class="who clearfix">
+                            <h4>Group Vars</h4>
+                        </div>
+                        <div class="text">
+                            <pre>
+                                <code>
+{{groupVars}}
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
 </div>

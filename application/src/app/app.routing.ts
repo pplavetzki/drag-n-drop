@@ -21,6 +21,7 @@ export const routes: Routes = [
       },
       {path: 'home', loadChildren: 'app/+home/home.module#HomeModule',data:{pageTitle: 'Home'}},
       {path: 'import-project', loadChildren: 'app/+import-project/import-project.module#ImportProjectModule',data:{pageTitle: 'Import Project'}},
+      {path: 'hosts', loadChildren: 'app/+hosts/hosts.module#HostsModule',data:{pageTitle: 'Hosts'}},
       {path: 'tasks', loadChildren: 'app/+tasks/tasks.module#TasksModule',data:{pageTitle: 'Tasks'}}
       // {path: 'dashboard', loadChildren: 'app/+dashboard/dashboard.module#DashboardModule',data:{pageTitle: 'Dashboard'}},
       // {path: 'smartadmin', loadChildren: 'app/+smartadmin-intel/smartadmin-intel.module#SmartadminIntelModule',data:{pageTitle: 'Smartadmin'}},

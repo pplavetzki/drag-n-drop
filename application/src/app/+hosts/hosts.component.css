@@ -1,0 +1,17 @@
+.hosts-textarea {
+    display: block;
+    padding: 8.5px;
+    margin: 0 0 9px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    height: auto;
+    resize: none;
+    width:100%;
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+}

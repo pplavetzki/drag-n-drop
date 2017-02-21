@@ -1,0 +1,5 @@
+---
+version:  '15.1.D61.7'
+template:
+    src: /srv/{{inventory_hostname}}.j2
+    dest: /dest/{{inventory_hostname}}.conf
