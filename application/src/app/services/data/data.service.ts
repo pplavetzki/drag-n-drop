@@ -13,7 +13,7 @@ import { Host } from '../../models/models'
 @Injectable()
 export class DataService {
 
-    private apiEndpoint = 'app/mock/data';
+    private apiEndpoint = 'assets/api/mock';
 
     constructor(private http: Http) {
         
@@ -22,7 +22,7 @@ export class DataService {
     getHosts(): Observable<any> {
         let headers      = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
         let options       = new RequestOptions({ headers: headers }); // Create a request option
-        let observable = this.http.get(this.apiEndpoint + '/hosts.json', options)
+        let observable = this.http.get(this.apiEndpoint + '/hosts/hosts.json', options)
                                   .map((res:any) => res.json())
                                   .catch((error:any) => Observable.throw(error.json().error || 'Server Error'));
         return observable;

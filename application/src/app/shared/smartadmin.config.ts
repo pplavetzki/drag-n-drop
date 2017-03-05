@@ -329,7 +329,5 @@ export const config: any = {
 
 
 // required for SmartNotification // @todo
-Object.assign(window['jQuery'], {
-  sound_on: config.sound_on,
-  sound_path: config.sound_path
-});
+window['jQuery'].sound_on = config.sound_on;
+window['jQuery'].sound_path = config.sound_path;

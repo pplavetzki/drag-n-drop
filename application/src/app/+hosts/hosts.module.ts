@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { routing } from './hosts.routing';
 import {SmartadminModule} from "../shared/smartadmin.module";
 import {HostsComponent} from "./hosts.component";
-import {AccordionModule} from "ng2-bootstrap";
+import {AccordionModule, CarouselModule} from "ng2-bootstrap";
 
 import {ServicesModule} from '../services/services.module';
 
@@ -13,7 +13,8 @@ import {ServicesModule} from '../services/services.module';
     routing,
     SmartadminModule,
     ServicesModule,
-    AccordionModule.forRoot()
+    AccordionModule.forRoot(),
+    CarouselModule.forRoot()
   ],
   declarations: [HostsComponent]
 })

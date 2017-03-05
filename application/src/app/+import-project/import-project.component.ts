@@ -23,7 +23,7 @@ export class ImportProjectComponent implements OnInit {
     }
 
     importPlaybook(event) {
-        let result = this.ansibleService.loadFile('app/mock/upload/83983-2390f/playbook.yml').subscribe(data => {
+        let result = this.ansibleService.loadFile('assets/api/mock/upload/83983-2390f/playbook.yml').subscribe(data => {
             this.playbookYml = data;
             let playbook = YAML.parse(data);
             this.showPlaybook = true;
@@ -32,11 +32,11 @@ export class ImportProjectComponent implements OnInit {
             console.log(playbook);
             console.log(data);
         });
-        let hostVarYml = this.ansibleService.loadFile('app/mock/upload/83983-2390f/host_vars/150.10.0.3.yml').subscribe(data => {
+        let hostVarYml = this.ansibleService.loadFile('assets/api/mock/upload/83983-2390f/host_vars/150.10.0.3.yml').subscribe(data => {
             this.hostVars = data;
             this.showPlaybook = true;
         });
-        let groupVarYml = this.ansibleService.loadFile('app/mock/upload/83983-2390f/group_vars/vsrx.yml').subscribe(data => {
+        let groupVarYml = this.ansibleService.loadFile('assets/api/mock/upload/83983-2390f/group_vars/vsrx.yml').subscribe(data => {
             this.groupVars = data;
             this.showPlaybook = true;
         });
