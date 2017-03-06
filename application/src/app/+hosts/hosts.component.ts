@@ -14,6 +14,8 @@ import {FadeInTop} from "../shared/animations/fade-in-top.decorator";
 export class HostsComponent implements OnInit {
 
   hosts:Array<Host> = [];
+  host:any = {};
+  input:string = '';
 
   constructor(private dataService:DataService) { }
 
@@ -80,7 +82,23 @@ export class HostsComponent implements OnInit {
   ngOnInit() {
     let hostVarYml = this.dataService.getHosts().subscribe(data => {
 
-        this.hosts = data;
+        this.hosts = data.hosts;
+        this.host = data.hosts[0];
+        let message = '';
+        for(let host of this.host.groups) {
+          if(host !== null && typeof host === 'object') {
+              let groupName = Object.keys(host)[0];
+              message += '[' + groupName + ']' + '\r';
+              for(let val of host[groupName]) {
+                  message += val + '\r';
+              }
+              message += '\r';
+          }
+          else {
+              message += host + '\r';
+          }
+        }
+        this.input = message.substr(0, (message.length - 1));
     });
   }
 
