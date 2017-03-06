@@ -16,6 +16,7 @@ export class HostsComponent implements OnInit {
   hosts:Array<Host> = [];
   host:any = {};
   input:string = '';
+  hostFiles:any = [];
 
   constructor(private dataService:DataService) { }
 
@@ -82,23 +83,28 @@ export class HostsComponent implements OnInit {
   ngOnInit() {
     let hostVarYml = this.dataService.getHosts().subscribe(data => {
 
-        this.hosts = data.hosts;
-        this.host = data.hosts[0];
-        let message = '';
-        for(let host of this.host.groups) {
-          if(host !== null && typeof host === 'object') {
-              let groupName = Object.keys(host)[0];
-              message += '[' + groupName + ']' + '\r';
-              for(let val of host[groupName]) {
-                  message += val + '\r';
-              }
-              message += '\r';
-          }
-          else {
-              message += host + '\r';
-          }
+        for(let file of data.hosts) {
+            let hostFile = {
+                file:file.file,
+                groups:''
+            };
+            let message = '';
+            for(let host of file.groups) {
+                if(host !== null && typeof host === 'object') {
+                    let groupName = Object.keys(host)[0];
+                    message += '[' + groupName + ']' + '\r';
+                    for(let val of host[groupName]) {
+                        message += val + '\r';
+                    }
+                    message += '\r';                    
+                }
+                else {
+                    message += host + '\r';
+                }
+            }
+            hostFile.groups = message.substr(0, (message.length - 1));
+            this.hostFiles.push(hostFile);
         }
-        this.input = message.substr(0, (message.length - 1));
     });
   }
 
