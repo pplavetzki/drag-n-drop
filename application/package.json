@@ -22,7 +22,7 @@
     "preversion": "npm test",
     "protractor": "protractor",
     "rimraf": "rimraf",
-    "server:dev": "./node_modules/.bin/ng server",
+    "server:dev": "./node_modules/.bin/ng server --host 0.0.0.0",
     "server": "npm run server:dev",
     "start": "npm run server:dev",
     "test": "./node_modules/.bin/ng test",

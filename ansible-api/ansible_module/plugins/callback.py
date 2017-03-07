@@ -18,6 +18,15 @@ class CallbackModule(CallbackBase):
         self.start_time = datetime.now()
         self.redis_client = redis.StrictRedis(host='150.10.0.2', port=6379, db=0)
         self.redis_client.publish('ansible-channel', 'Ansible Publishing Connected')
+
+    def v2_runner_on_ok(self, result, **kwargs):
+        """Print a json representation of the result
+
+        This method could store the result in an instance attribute for retrieval later
+        """
+        host = result._host
+        self.redis_client.publish('ansible-channel', result._result)
+        # print json.dumps({host.name: result._result}, indent=4)
     
     '''
     Use this for the task data
@@ -75,23 +84,3 @@ class CallbackModule(CallbackBase):
     def v2_playbook_item_on_skipped(self, result):
         msg = "skipping: [%s] => (item=%s) " % (result._host.get_name(), result._result['item'])
         self.redis_client.publish('ansible-channel', msg)
-
-
-    def v2_playbook_on_stats(self, stats):
-        run_time = datetime.now() - self.start_time
-        self.logger.runtime = run_time.seconds  # returns an int, unlike run_time.total_seconds()
-
-        hosts = sorted(stats.processed.keys())
-        for h in hosts:
-            t = stats.summarize(h)
-
-            msg = "PLAY RECAP [%s] : %s %s %s %s %s" % (
-                h,
-                "ok: %s" % (t['ok']),
-                "changed: %s" % (t['changed']),
-                "unreachable: %s" % (t['unreachable']),
-                "skipped: %s" % (t['skipped']),
-                "failed: %s" % (t['failures']),
-            )
-
-            self.redis_client.publish('ansible-channel', msg)
