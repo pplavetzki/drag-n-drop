@@ -1,5 +1,5 @@
 export interface Task {
-    name:string;
+    name?:string;
     module:string;
     args?:any;
 }

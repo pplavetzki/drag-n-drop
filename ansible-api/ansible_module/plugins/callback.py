@@ -1,4 +1,5 @@
 import redis
+import json
 
 from datetime import datetime
 
@@ -19,14 +20,28 @@ class CallbackModule(CallbackBase):
         self.redis_client = redis.StrictRedis(host='150.10.0.2', port=6379, db=0)
         self.redis_client.publish('ansible-channel', 'Ansible Publishing Connected')
 
+    def v2_runner_on_failed(self, result, ignore_errors=False):
+        host = result._host.get_name()
+        self.redis_client.publish('ansible-channel', json.dumps({host.name: result._result}, indent=4))
+
+    def v2_runner_on_skipped(self, result):
+        host = result._host.get_name()
+        self.redis_client.publish('ansible-channel', json.dumps({host.name: result._result}, indent=4))
+
+    def v2_runner_on_unreachable(self, result):
+        host = result._host.get_name()
+        self.redis_client.publish('ansible-channel', json.dumps({host.name: result._result}, indent=4))
+
+    def v2_runner_on_no_hosts(self, task):
+        self.redis_client.publish('ansible-channel', "No Hosts")
+
     def v2_runner_on_ok(self, result, **kwargs):
         """Print a json representation of the result
 
         This method could store the result in an instance attribute for retrieval later
         """
         host = result._host
-        self.redis_client.publish('ansible-channel', result._result)
-        # print json.dumps({host.name: result._result}, indent=4)
+        self.redis_client.publish('ansible-channel', json.dumps({host.name: result._result}, indent=4))
     
     '''
     Use this for the task data
@@ -84,3 +99,4 @@ class CallbackModule(CallbackBase):
     def v2_playbook_item_on_skipped(self, result):
         msg = "skipping: [%s] => (item=%s) " % (result._host.get_name(), result._result['item'])
         self.redis_client.publish('ansible-channel', msg)
+

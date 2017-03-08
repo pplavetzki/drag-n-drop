@@ -34,7 +34,6 @@ export class TasksComponent implements OnInit {
 //module='junos_get_facts.py', args=dict(host='{{inventory_hostname}}', savedir='.', user='root', passwd='Juniper'))
   executePlay(event) {
     let getFactsTask:Task = {
-      name:"Get Facts",
       module: "junos_get_facts",
       args: {
         host: '{{inventory_hostname}}',
@@ -51,23 +50,23 @@ export class TasksComponent implements OnInit {
       tasks: [getFactsTask]
     };
 
-    let result = this._ansibleService.loadFile('playbook.yml').subscribe(data => {
-        this.testYml = data;
-        let loadedYaml = YAML.parse(data);
-        let tpl = swig.compile('name:  Gather Juniper Facts\n  junos_get_facts:\n    host={{inventory_hostname}}\n     savedir={{savedir}}     user={{user}}    passwd={{passwd}}');
-        let values = tpl(loadedYaml);
-        console.log(values);
-        console.log(data);
-    });
+    // let result = this._ansibleService.loadFile('playbook.yml').subscribe(data => {
+    //     this.testYml = data;
+    //     let loadedYaml = YAML.parse(data);
+    //     let tpl = swig.compile('name:  Gather Juniper Facts\n  junos_get_facts:\n    host={{inventory_hostname}}\n     savedir={{savedir}}     user={{user}}    passwd={{passwd}}');
+    //     let values = tpl(loadedYaml);
+    //     console.log(values);
+    //     console.log(data);
+    // });
 
-    // let result = this._ansibleService.executePlay(play).subscribe(
-    //                             results => {
-    //                                 console.log(results);
-    //                             }, 
-    //                             err => {
-    //                                 // Log errors if any
-    //                                 console.log(err);
-    //                             });
+    let result = this._ansibleService.executePlay(play).subscribe(
+                                results => {
+                                    console.log(results);
+                                }, 
+                                err => {
+                                    // Log errors if any
+                                    console.log(err);
+                                });
   }
 
   ngOnInit() {
