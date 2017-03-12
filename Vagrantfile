@@ -9,10 +9,10 @@ Vagrant.configure("2") do |config|
     ubuntu.vm.hostname = :ubuntu
     ubuntu.vm.box = 'ubuntu/trusty64'
 
-    ubuntu.vm.provider :virtualbox do |prl|
-      prl.gui = false
-      prl.cpus = 2
-      prl.memory = 2048 # works with 1024, 512 will need a swap file
+    ubuntu.vm.provider :virtualbox do |vb|
+      vb.gui = false
+      vb.cpus = 2
+      vb.memory = 2048 # works with 1024, 512 will need a swap file
     end
 
     port = 4200
@@ -31,11 +31,11 @@ Vagrant.configure("2") do |config|
     vsrx.vm.hostname = :vsrx1
     vsrx.vm.box = 'juniper/ffp-12.1X47-D15.4-packetmode'
     vsrx.vm.network :private_network, ip: '150.10.0.3'
-    vsrx.vm.provider :virtualbox do |prl|
-      prl.cpus = 2 # needs 2 to boot?
-      prl.memory = 512
-      prl.name = 'vsrx2_config'
-      prl.customize ['modifyvm', :id, '--uartmode1', 'server', '/tmp/vsrx2_config_serial']
+    vsrx.vm.provider :virtualbox do |vb|
+      vb.cpus = 2 # needs 2 to boot?
+      vb.memory = 512
+      vb.name = 'vsrx2_config'
+      vb.customize ['modifyvm', :id, '--uartmode1', 'server', '/tmp/vsrx2_config_serial']
 
     end
   end
