@@ -1,4 +1,3 @@
-export {LayoutSwitcherComponent} from './layout-switcher.component';
 export {LayoutService} from './layout.service';
 export {SmartadminLayoutModule} from './layout.module';
 
