@@ -8,6 +8,8 @@ import {ServicesModule} from '../services/services.module';
 
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 
+import {UtilsModule} from "../shared/utils/utils.module";
+
 
 @NgModule({
   imports: [
@@ -15,7 +17,8 @@ import {DragulaModule} from 'ng2-dragula/ng2-dragula';
     routing,
     SmartadminModule,
     DragulaModule,
-    ServicesModule
+    ServicesModule,
+    UtilsModule
   ],
   declarations: [TasksComponent]
 })

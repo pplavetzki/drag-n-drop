@@ -12,7 +12,15 @@
                         <div class="who clearfix">
                             <h4>Available Tasks</h4>
                         </div>
-                        <div [dragula]='"second-bag"' style="min-height: 80px" id="left">
+                        <div [dragula]='"second-bag"' [dragulaModel]='tasks' style="min-height: 80px" id="left">
+                            <div *ngFor="let task of tasks" class="text">
+								<span class="yaml-main">-</span><span class="yaml-name">name:</span><span class="yaml-main-info">{{task.name}}</span>
+								<span class="yaml-level-two">{{task.module}}:</span>
+                                <span *ngFor="let arg of task.args | keys" class="yaml-level-three">{{arg.key}}={{arg.value}}</span>
+							</div>
+                        </div>
+                        <!--
+                        <div [dragula]='"second-bag"' [dragulaModel]='tasks' style="min-height: 80px" id="left">
                             <div class="text">
 								<span class="yaml-main">-</span><span class="yaml-name">name:</span><span class="yaml-main-info">This is a simple template task</span>
 								<span class="yaml-level-two">template:</span>
@@ -36,6 +44,7 @@
 								<span class="yaml-level-three" ngNonBindable>passwd={{ passwd }}</span>						
 							</div>
                         </div>
+                        -->
                     </div>
 			    </div>
             </div>
@@ -43,7 +52,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body status">
                         <div class="who clearfix">
-                            <h4>Build the Play<a href="javascript:void(0);" (click)="executePlay($event)" title="Run the Play" class="btn btn-primary btn-circle pull-right"><i class="glyphicon glyphicon-play"></i></a></h4>
+                            <h4>Build the Play<a href="javascript:void(0);" (click)="executePlay($event)" title="Run the Play" class="btn btn-primary btn-circle disabled pull-right"><i class="glyphicon glyphicon-play"></i></a></h4>
                         </div>     
                                  
                         <div [dragula]='"second-bag"' style="min-height: 80px" id="right">
@@ -62,11 +71,10 @@
                         <div class="text">
                             <pre>
                                 <code>
-{{testYml}}
+                                    <div class="text" *ngFor="let task of messages;">{{task}}</div>
                                 </code>
                             </pre>
                         </div>
-                        <div class="text" *ngFor="let task of messages;">{{task}}</div>
                     </div>
                 </div>
             </div>

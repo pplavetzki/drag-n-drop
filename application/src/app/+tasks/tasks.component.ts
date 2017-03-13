@@ -10,6 +10,8 @@ import { AnsibleService } from '../services/ansible/ansible.service';
 
 import { Play, Task } from '../models/models';
 
+import {KeysPipe} from '../shared/utils/keys.pipe';
+
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -21,6 +23,8 @@ export class TasksComponent implements OnInit {
   messages:Array<string> = [];
   testYml:string = '';
 
+  tasks:Array<Task> = [];
+
   constructor(private _dragulaService:DragulaService, 
               private _ansibleService:AnsibleService) { 
     _dragulaService.setOptions('second-bag', {
@@ -30,7 +34,17 @@ export class TasksComponent implements OnInit {
         return target.id !== 'left';
       }
     });
+    _dragulaService.drop.subscribe((value) => {
+      console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+    });
   }
+
+  private onDrop(args) {
+    let [e, el] = args;
+    // do something
+  }
+
 //module='junos_get_facts.py', args=dict(host='{{inventory_hostname}}', savedir='.', user='root', passwd='Juniper'))
   executePlay(event) {
     let getFactsTask:Task = {
@@ -76,6 +90,16 @@ export class TasksComponent implements OnInit {
       }
       console.log(message);
     });
+    this.tasks.push({
+        name: "Gather Juniper Facts",
+        module: "junos_get_facts",
+        args: {
+          host: '{{inventory_hostname}}',
+          savedir: '.',
+          user:'root',
+          passwd:'Juniper'
+        }
+      });
   }
 
   ngOnDestroy() {
