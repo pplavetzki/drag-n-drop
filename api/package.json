@@ -13,6 +13,7 @@
   "dependencies": {
     "cors": "^2.8.1",
     "express": "^4.14.0",
-    "socket.io": "^1.7.2"
+    "socket.io": "^1.7.2",
+    "couchbase": "^2.3.0"
   }
 }

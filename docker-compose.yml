@@ -22,18 +22,18 @@ services:
     networks:
       - default_network
 
-  # express:
-  #   container_name: api
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - "./api:/var/app"
-  #     - "/var/app/node_modules"
-  #   build:
-  #     context:  .
-  #     dockerfile: express.dockerfile
-  #   networks:
-  #     - default_network
+  express:
+    container_name: api
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./api:/var/app"
+      - "/var/app/node_modules"
+    build:
+      context:  .
+      dockerfile: express.dockerfile
+    networks:
+      - default_network
 
   ansible-api:
     container_name: ansible-api

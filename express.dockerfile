@@ -1,7 +1,7 @@
 FROM node:alpine
 
-RUN apk add --no-cache bash gawk sed grep bc coreutils \
-    python python-dev py-pip build-base git openssh
+RUN apk update && apk add --no-cache bash gawk sed grep bc coreutils \
+    python python-dev py-pip build-base openssh
 
 RUN npm cache clean
 

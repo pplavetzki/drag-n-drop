@@ -38,13 +38,12 @@
                         </div>
                     </div>
 			    </div>
-                <button class="btn btn-small" (click)="executePlay($event)">Execute Play</button>
             </div>
             <div class="col-sm-6 col-lg-4">
                 <div class="panel panel-default">
                     <div class="panel-body status">
                         <div class="who clearfix">
-                            <h4>Create the Play</h4>
+                            <h4>Build the Play<a href="javascript:void(0);" (click)="executePlay($event)" title="Run the Play" class="btn btn-primary btn-circle pull-right"><i class="glyphicon glyphicon-play"></i></a></h4>
                         </div>     
                                  
                         <div [dragula]='"second-bag"' style="min-height: 80px" id="right">
@@ -53,8 +52,6 @@
                     </div>
                 </div>
             </div>
-		</div>
-        <div class="row">
             <div class="col-sm-6 col-lg-4">
                 <div class="panel panel-default">
                     <div class="panel-body status">
@@ -73,5 +70,5 @@
                     </div>
                 </div>
             </div>
-        </div>
+		</div>
 </div>
