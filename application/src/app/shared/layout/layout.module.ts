@@ -8,7 +8,6 @@ import {NavigationModule} from "./navigation/navigation.module";
 import {RibbonComponent} from "./ribbon/ribbon.component";
 import {ShortcutComponent} from "./shortcut/shortcut.component";
 import {ToggleActiveDirective} from "../utils/toggle-active.directive";
-// import {LayoutSwitcherComponent} from "./layout-switcher.component";
 import { MainLayoutComponent } from './app-layouts/main-layout.component';
 import { EmptyLayoutComponent } from './app-layouts/empty-layout.component';
 import {RouterModule} from "@angular/router";
