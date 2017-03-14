@@ -23,7 +23,10 @@ export class TasksComponent implements OnInit {
   messages:Array<string> = [];
   testYml:string = '';
 
+  isdisabled:boolean = true;
+
   tasks:Array<Task> = [];
+  play:Array<Task> = [];
 
   constructor(private _dragulaService:DragulaService, 
               private _ansibleService:AnsibleService) { 
@@ -38,6 +41,15 @@ export class TasksComponent implements OnInit {
       console.log(`drop: ${value[0]}`);
       this.onDrop(value.slice(1));
     });
+    _dragulaService.dropModel.subscribe((value) => {
+      this.onDropModel(value);
+    });
+  }
+
+  private onDropModel(value) {
+    if(this.play && this.play.length > 0) {
+      this.isdisabled = false;
+    }
   }
 
   private onDrop(args) {
