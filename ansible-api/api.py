@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import redis
-# xoxp-155663557072-156302244467-156461521477-c4b7a87c267d16b486e2b2482a3a5799 app token
+
 from flask import Flask, request, jsonify
 from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS, cross_origin
@@ -21,7 +21,7 @@ logger = logging.getLogger('flask_cors')
 
 socketio = SocketIO(app, engineio_options={'logger': True})
 
-slack_token = 'xoxp-155663557072-156302244467-156461521477-c4b7a87c267d16b486e2b2482a3a5799'
+
 
 '''
 This is where we hook our service into
