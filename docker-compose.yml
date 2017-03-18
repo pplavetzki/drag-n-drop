@@ -44,6 +44,7 @@ services:
     build:
       context: .
       dockerfile: ansible-api.dockerfile
+    image: ansible-api
     networks: 
       - default_network
 

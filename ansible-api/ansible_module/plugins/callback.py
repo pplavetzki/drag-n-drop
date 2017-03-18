@@ -21,8 +21,8 @@ class CallbackModule(CallbackBase):
         self.redis_client.publish('ansible-channel', 'Ansible Publishing Connected')
 
     def v2_runner_on_failed(self, result, ignore_errors=False):
-        host = result._host.get_name()
-        self.redis_client.publish('ansible-channel', json.dumps({host.name: result._result}, indent=4))
+        # host = result._host.get_name()
+        self.redis_client.publish('ansible-channel', json.dumps(result._result, indent=4))
 
     def v2_runner_on_skipped(self, result):
         host = result._host.get_name()

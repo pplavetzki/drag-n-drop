@@ -68,14 +68,23 @@ export class TasksComponent implements OnInit {
         passwd:'Juniper'
       }
     };
+    let rpcTask:Task = {
+      module: "junos_rpc",
+      args: {
+        host:'{{inventory_hostname}}',
+        rpc:'get-interface-information',
+        dest:'./get_interface_information.conf',
+        user:'root',
+        passwd:'Juniper'
+      }
+    };
     let play:Play = {
       name: "Juniper Tasks",
       hosts: "all",
       host_list: ['150.10.0.3'],
       gatherFacts: "no",
-      tasks: [getFactsTask]
+      tasks: [getFactsTask, rpcTask]
     };
-
     // let result = this._ansibleService.loadFile('playbook.yml').subscribe(data => {
     //     this.testYml = data;
     //     let loadedYaml = YAML.parse(data);

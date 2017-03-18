@@ -1,0 +1,13 @@
+---
+- name: simple task
+  hosts: all 
+  roles:
+    - Juniper.junos
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: gather facts
+      junos_gather_facts:
+        host:{{ inventory_hostname }}
+        user:root
+        passwd:Juniper

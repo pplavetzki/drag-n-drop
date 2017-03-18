@@ -45,7 +45,7 @@ def create_and_run(play):
     for task in play['tasks']:
         playTasks.append(dict(action=task))
         
-
+    print 'hello world'
     # create play with tasks
     play_source =  dict(
             name = play['name'],
@@ -76,7 +76,11 @@ def create_and_run(play):
 
 if __name__ == '__main__':
     # play = {'name':'initial play', 'hosts':'all', 'host_list':['150.10.0.3']}
-    play = {"name":"play of all plays", "hosts":"all", "host_list":["150.10.0.3"], "tasks":[{"name":"task 1"}, {"name":"task 2"}]}
+    play = {"name":"play of all plays", 
+            "hosts":"all", 
+            "gatherFacts":"no", 
+            "host_list":["150.10.0.3"], 
+            "tasks":[{"name": "Gather Juniper Facts","module": "junos_get_facts","args": {"host": "{{inventory_hostname}}","savedir": ".", "user":"root","passwd":"Juniper"}}]}
     print play['name']
     create_and_run(play)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import redis
-
+# xoxp-155663557072-156302244467-156461521477-c4b7a87c267d16b486e2b2482a3a5799 app token
 from flask import Flask, request, jsonify
 from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS, cross_origin
@@ -17,10 +17,11 @@ app = Flask(__name__)
 
 logging.getLogger('flask_cors').level = logging.DEBUG
 CORS(app, resources={r"/*":{"origins":"*"}})
-
+logger = logging.getLogger('flask_cors')
 
 socketio = SocketIO(app, engineio_options={'logger': True})
 
+slack_token = 'xoxp-155663557072-156302244467-156461521477-c4b7a87c267d16b486e2b2482a3a5799'
 
 '''
 This is where we hook our service into
@@ -36,6 +37,7 @@ pub.subscribe(**{'ansible-channel': _handler})
 
 api = Api(app)
 
+logger.debug('start of the application')
 
 @app.route('/play', methods=["POST"])
 def executePlay():
@@ -48,8 +50,21 @@ def executePlay():
         return jsonify(e)
 
 
+@app.route('/slack-message', methods=["POST"])
+def send_slack_message():
+    try:
+        body = request.get_json()
+        logger.debug(body['message'])
+        payload = {'token': slack_token, 'channel': 'general', 'text':body['message']}
+        r = requests.post("https://slack.com/api/chat.postMessage", data=payload)
+        return jsonify(r.json())
+    except Exception, e:
+        return jsonify(e)
+
+
 @socketio.on('connect', namespace='/juniper')
 def ws_conn():
+    logger.debug('connected')
     socketio.emit('ansible-message', 'connected', namespace='/juniper')
 
     
