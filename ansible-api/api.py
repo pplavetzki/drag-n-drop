@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import redis
-
+# xoxp-155663557072-156302244467-155844468257-428b37b9ee2d4ec84125d50bff150a1c app token
 from flask import Flask, request, jsonify
 from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS, cross_origin
@@ -21,7 +21,7 @@ logger = logging.getLogger('flask_cors')
 
 socketio = SocketIO(app, engineio_options={'logger': True})
 
-
+slack_token = 'xoxp-155663557072-156302244467-155844468257-428b37b9ee2d4ec84125d50bff150a1c'
 
 '''
 This is where we hook our service into
@@ -53,9 +53,9 @@ def executePlay():
 @app.route('/slack-message', methods=["POST"])
 def send_slack_message():
     try:
-        body = request.get_json()
-        logger.debug(body['message'])
-        payload = {'token': slack_token, 'channel': 'general', 'text':body['message']}
+        # body = request.get_json()
+        logger.debug(request.form['message'])
+        payload = {'token': slack_token, 'channel': 'general', 'text':request.form['message']}
         r = requests.post("https://slack.com/api/chat.postMessage", data=payload)
         return jsonify(r.json())
     except Exception, e:
@@ -85,3 +85,4 @@ def default_error_handler(e):
 if __name__ == '__main__':
     thread = pub.run_in_thread(sleep_time=0.1)
     socketio.run(app, host='0.0.0.0', debug=True)
+

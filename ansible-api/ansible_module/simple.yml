@@ -1,13 +1,19 @@
 ---
 - name: simple task
   hosts: all 
-  roles:
-    - Juniper.junos
   connection: local
   gather_facts: no
+  roles:
+    - Juniper.junos
   tasks:
-    - name: gather facts
-      junos_gather_facts:
-        host:{{ inventory_hostname }}
-        user:root
-        passwd:Juniper
+    - junos_get_facts:
+        host={{ inventory_hostname }}
+        user=root
+        passwd=Juniper
+    - junos_get_config:
+        host: "{{ inventory_hostname }}"
+        logfile: get_config.log
+        dest: "{{ inventory_hostname }}.xml"
+        user: root
+        passwd: Juniper
+        format: xml

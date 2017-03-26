@@ -22,6 +22,15 @@ services:
     networks:
       - default_network
 
+  couchbase:
+    container_name: couchbase
+    image:  couchbase:community
+    ports:
+      - "8091-8094:8091-8094"
+      - "11210:11210"
+    networks: 
+      - default_network
+
   express:
     container_name: api
     ports:
